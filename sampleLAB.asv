@@ -23,12 +23,13 @@ function lab = sampleLAB(delta)
     lab(indices,:) = [];
     scatter3(lab(:,1),lab(:,2),lab(:,3),50,'r','filled');
     title("LAB space with uniformly distributeed coordinates. ");
-    legend(["Uniformly distributed coordinates","Selected points existing in RBG space"]);
-    savefig('Fig1.fig');
+    legend(["Uniformly distributed coordinates","Selected points existing in RBG space"])
+    savefig('Fig1.fig')
     out = colorconvert(lab,'Lab','D65');
     xyY = [out.x out.y out.Y];
     coord = xyY;
     figure; set(gcf, 'Position', get(0, 'Screensize'));
     scatter3(xyY(:,1),xyY(:,2),xyY(:,3),50,rgb,'filled');
-    savefig('Fig2.fig'); title("xyY space");
+    savefig('Fig1.fig')
+    title("xyY space")
 end
