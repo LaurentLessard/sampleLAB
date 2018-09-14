@@ -1,17 +1,18 @@
-%%
 function lab = sampleLAB(delta)
     % sampleLAB(delta): Generates a grid of points uniformly spaced in LAB space 
     % which can be mapped to RGB space.
-    % Input : delta --TODO
+    % Input : delta -- TODO
     % Output : Nx3 matrix of coordinates in RGB space.
     close all; clc;
     % Generate delta spaced points for L (0-100),a(-100 to 100) and b (-100 to 100)
+    delta = 20;
     L = 0:delta:100 ;% length = N
-    a = -100:delta:100; % length = 2N-1
-    b = -100:delta:100; % length = 2N-1
+    a = [0-delta:-delta:-100 0:delta:100];
+    b = a;
     lab = (combvec(L,a,b))';
+    %Plot
     figure; set(gcf, 'Position', get(0, 'Screensize'));
-    scatter3(lab(:,1),lab(:,2),lab(:,3),30,'green');
+    scatter3(lab(:,2),lab(:,3),lab(:,1),10,'k','filled');
     hold on;
     % Every row of the matrix 'lab' is a point in the color space
     % Validate coordinates to exist in RGB space
@@ -21,14 +22,20 @@ function lab = sampleLAB(delta)
     % Get rid of coordinates which do not exist in RGB space
     rgb(indices,:) = [] ;
     lab(indices,:) = [];
-    scatter3(lab(:,1),lab(:,2),lab(:,3),50,'r','filled');
-    title("LAB space with uniformly distributeed coordinates. ");
-    legend(["Uniformly distributed coordinates","Selected points existing in RBG space"]);
-    savefig('Fig1.fig');
+    scatter3(lab(:,2),lab(:,3),lab(:,1),80,'r','filled');
+    daspect([1 1 1]); axis([-100 100 -100 100 0 100]); grid on; 
+    title(['LAB space with uniformly distributed points for \delta = ',num2str(delta)]);
+    legend(["Uniformly distributed points","Selected points existing in RBG space"],'Location','southeast');
+    hold off;
+    figure;subplot(1,2,1);
+    scatter3(lab(:,2),lab(:,3),lab(:,1),80,rgb,'filled');
+    daspect([1 1 1]); axis([-100 100 -100 100 0 100]); grid on; 
+    title(['Selected colors in LAB space for \delta = ',num2str(delta)]);
     out = colorconvert(lab,'Lab','D65');
     xyY = [out.x out.y out.Y];
     coord = xyY;
-    figure; set(gcf, 'Position', get(0, 'Screensize'));
-    scatter3(xyY(:,1),xyY(:,2),xyY(:,3),50,rgb,'filled');
-    savefig('Fig2.fig'); title("xyY space");
+    subplot(1,2,2);set(gcf, 'Position', get(0, 'Screensize'));
+    scatter3(xyY(:,1),xyY(:,2),xyY(:,3),70,rgb,'filled');
+    axis([0 1 0 1 0 100]); grid on;daspect([0.1 0.1 10]);
+    title(['Selected colors in xyY space for \delta = ',num2str(delta)]);
 end
