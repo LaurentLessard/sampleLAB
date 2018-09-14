@@ -8,7 +8,7 @@ for d = 1:length(delta)
 end
 %%
 plot(delta,n)
-title("Tradeoff between number of colors obtained vs delta")  
-    
-
+title("Tradeoff between number of colors obtained vs \delta") 
+xlabel('\delta');ylabel('Number of colors');
+savefig('Tradeoff.fig');    
     
